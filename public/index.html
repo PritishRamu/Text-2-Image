@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Text‑2‑Image Demo</title>
-  <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    textarea { width: 100%; }
-    img { max-width: 100%; margin-top: 1rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistry AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Text‑2‑Image</h1>
+    <section class="image-generator">
+        <div class="content">
+            <h1>AI Image Generator</h1>
+            <p>Convert your text into an image using this JavaScript-powered AI Image Generator tool.</p>
+            <form action="#" class="generate-form">
+                <input type="text" class="prompt-input" placeholder="Describe what you want to see" required>
+                <div class="controls">
+                    <select  class="img-quantity">
+                        <option value="1">1 Image</option>
+                        <option value="2">2 Images</option>
+                        <option value="3">3 Images</option>
+                        <option value="4" selected>4 Images</option>
 
-  <textarea id="prompt" rows="3" placeholder="Enter prompt…"></textarea><br>
-  <button id="generate">Generate Image</button>
+                    </select>
+                    <button  type="submit" class="generate-btn">Generate</button>
+                </div> 
+            </form>
+        </div>
+    </section>
+    <section class="image-gallery">
+        <div class="img-card">
+            <img src="images/img-1.webp" alt="image">
+            <a href="#" class="downlaod-btn">
+                <img src="images/download.svg" alt="download-icon">
+            </a>
+        </div>
 
-  <div id="result"></div>
-
-  <script>
-    document.getElementById('generate').addEventListener('click', async () => {
-      const prompt = document.getElementById('prompt').value.trim();
-      if (!prompt) return alert('Please enter a prompt.');
-
-      const res = await fetch('/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, n: 1 })
-      });
-      const data = await res.json();
-      const b64 = data.data?.[0]?.b64_json;
-      if (!b64) return alert('No image returned.');
-
-      // display image
-      const img = document.createElement('img');
-      img.src = `data:image/png;base64,${b64}`;
-      const result = document.getElementById('result');
-      result.innerHTML = '';
-      result.appendChild(img);
-    });
-  </script>
+        <div class="img-card">
+            <img src="images/img-2.png" alt="image">
+            <a href="#" class="downlaod-btn">
+                <img src="images/download.svg" alt="download-icon">
+            </a>
+        </div>
+        <div class="img-card">
+            <img src="images/img-3.jfif" alt="image">
+            <a href="#" class="downlaod-btn">
+                <img src="images/download.svg" alt="download-icon">
+            </a>
+        </div>
+        <div class="img-card">
+            <img src="images/img-4.webp" alt="image">
+            <a href="#" class="downlaod-btn">
+                <img src="images/download.svg" alt="download-icon">
+            </a>
+        </div>
+    </section>
 </body>
 </html>
