@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text‑2‑Image Demo</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    textarea { width: 100%; }
+    img { max-width: 100%; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Text‑2‑Image</h1>
+
+  <textarea id="prompt" rows="3" placeholder="Enter prompt…"></textarea><br>
+  <button id="generate">Generate Image</button>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('generate').addEventListener('click', async () => {
+      const prompt = document.getElementById('prompt').value.trim();
+      if (!prompt) return alert('Please enter a prompt.');
+
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, n: 1 })
+      });
+      const data = await res.json();
+      const b64 = data.data?.[0]?.b64_json;
+      if (!b64) return alert('No image returned.');
+
+      // display image
+      const img = document.createElement('img');
+      img.src = `data:image/png;base64,${b64}`;
+      const result = document.getElementById('result');
+      result.innerHTML = '';
+      result.appendChild(img);
+    });
+  </script>
+</body>
+</html>

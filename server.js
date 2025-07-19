@@ -9,6 +9,7 @@ const PORT=process.env.PORT || 5000;
 
 app.use(cors()); // Enable CORS for frontend requests
 app.use(express.json()); // Parse JSON request body
+app.use(express.static('public'));
 
 app.get("/", (req, res) => res.send("🖼️ Service is up!"));
 // Route to generate images using OpenAI API
